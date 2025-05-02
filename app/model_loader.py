@@ -1,11 +1,16 @@
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
-
+import torch
+# Skilgreinum slóðina að fínþjálfaða líkaninu okkar
 model_path = "DadiAron/joke-generator-3000"
 
+# Setjum tokenizer og model sem okkar líkan
 tokenizer = GPT2Tokenizer.from_pretrained(model_path)
 model = GPT2LMHeadModel.from_pretrained(model_path)
+
+# Setja líkanið í evaluation ham til þess að geta fengið betri úttök
 model.eval()
 
+# Setjum ákveðnar stillingar fyrir úttakið
 def generate_joke(prompt: str) -> str:
     input_ids = tokenizer.encode(prompt, return_tensors="pt")
     output = model.generate(
