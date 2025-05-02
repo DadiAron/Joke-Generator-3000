@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Joke Generator 3000</title>
+</head>
+<body>
+  <h1>This is the Joke Generator 3000! It's really trying to be funny, but does it succeed?</h1>
+  <h2>*DISCLAIMER* The generator might generate some offensive text... if you are easily offended please do not continue.</h2>
+  <textarea id="prompt" rows="4" cols="50" placeholder="Enter any text you want here..."></textarea><br>
+  <button onclick="generate()">Generate Joke</button>
+  <p><strong>Joke:</strong> <span id="joke"></span></p>
+
+  <script>
+    async function generate() {
+      const prompt = document.getElementById("prompt").value;
+      const response = await fetch("/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt })
+      });
+      const data = await response.json();
+      document.getElementById("joke").innerText = data.joke;
+    }
+  </script>
+</body>
+</html>
